@@ -2,7 +2,6 @@
 import React, { useEffect } from 'react';
 import { LandingPageData, Review, ProcessStep } from '../types';
 import { WhatsAppButton } from '../components/WhatsAppButton';
-import { resolvePublicUrl } from '../clientApi';
 
 interface SectionTitleProps {
   children: React.ReactNode;
@@ -31,7 +30,7 @@ export const LandingPage: React.FC<{ data: LandingPageData }> = ({ data }) => {
       {/* Hero */}
       <section className="relative min-h-screen flex items-center overflow-hidden py-24">
         <div className="absolute inset-0 z-0">
-          <img src={resolvePublicUrl(data.theme.heroBgImage)} alt="Hero" className="w-full h-full object-cover" />
+          <img src={data.theme.heroBgImage} alt="Hero" className="w-full h-full object-cover" />
           <div className="absolute inset-0" style={{ backgroundColor: 'var(--hero-overlay)' }}></div>
           <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/30"></div>
         </div>
@@ -72,7 +71,7 @@ export const LandingPage: React.FC<{ data: LandingPageData }> = ({ data }) => {
             <WhatsAppButton number={data.hero.whatsappNumber} text={data.hero.ctaText} style={{ backgroundColor: 'var(--primary-color)' }} />
           </div>
           <div className="relative">
-            <img src={resolvePublicUrl(data.theme.puzzleImage)} alt="Desafio" className="rounded-2xl shadow-2xl w-full aspect-square object-cover grayscale-[20%]" />
+            <img src={data.theme.puzzleImage} alt="Desafio" className="rounded-2xl shadow-2xl w-full aspect-square object-cover grayscale-[20%]" />
           </div>
         </div>
       </section>
@@ -81,7 +80,7 @@ export const LandingPage: React.FC<{ data: LandingPageData }> = ({ data }) => {
       <section className="py-24" style={{ backgroundColor: 'var(--accent-bg-color)' }}>
         <div className="container mx-auto px-6 grid md:grid-cols-2 gap-16 items-center max-w-6xl">
           <div className="order-2 md:order-1">
-            <img src={resolvePublicUrl(data.theme.lawImage)} alt="Justiça" className="rounded-2xl shadow-2xl w-full aspect-video object-cover grayscale-[20%]" />
+            <img src={data.theme.lawImage} alt="Justiça" className="rounded-2xl shadow-2xl w-full aspect-video object-cover grayscale-[20%]" />
           </div>
           <div className="space-y-8 order-1 md:order-2">
             <SectionTitle>{data.legal.title}</SectionTitle>
@@ -108,7 +107,7 @@ export const LandingPage: React.FC<{ data: LandingPageData }> = ({ data }) => {
             <WhatsAppButton number={data.hero.whatsappNumber} text={data.hero.ctaText} style={{ backgroundColor: 'var(--primary-color)' }} />
           </div>
           <div className="relative">
-            <img src={resolvePublicUrl(data.theme.pillsImage)} alt="Medicamentos" className="rounded-2xl shadow-2xl w-full aspect-video object-cover grayscale-[20%]" />
+            <img src={data.theme.pillsImage} alt="Medicamentos" className="rounded-2xl shadow-2xl w-full aspect-video object-cover grayscale-[20%]" />
           </div>
         </div>
       </section>
@@ -137,7 +136,7 @@ export const LandingPage: React.FC<{ data: LandingPageData }> = ({ data }) => {
         <div className={`container mx-auto px-6 grid gap-16 items-center max-w-6xl ${data.theme.lawyerImage ? 'md:grid-cols-2' : 'md:grid-cols-1'}`}>
           {data.theme.lawyerImage && (
             <div className="relative">
-              <img src={resolvePublicUrl(data.theme.lawyerImage)} alt="Foto" className="rounded-2xl shadow-2xl w-full aspect-[4/5] object-cover grayscale-[20%]" />
+              <img src={data.theme.lawyerImage} alt="Foto" className="rounded-2xl shadow-2xl w-full aspect-[4/5] object-cover grayscale-[20%]" />
             </div>
           )}
           <div className={`space-y-8 ${data.theme.lawyerImage ? '' : 'max-w-3xl mx-auto'}`}>
@@ -161,7 +160,7 @@ export const LandingPage: React.FC<{ data: LandingPageData }> = ({ data }) => {
             <WhatsAppButton number={data.hero.whatsappNumber} text={data.hero.ctaText} style={{ backgroundColor: 'var(--primary-color)' }} />
           </div>
           <div className="relative">
-            <img src={resolvePublicUrl(data.theme.handshakeImage)} alt="Encorajamento" className="rounded-2xl shadow-2xl w-full aspect-video object-cover grayscale-[20%]" />
+            <img src={data.theme.handshakeImage} alt="Encorajamento" className="rounded-2xl shadow-2xl w-full aspect-video object-cover grayscale-[20%]" />
           </div>
         </div>
       </section>

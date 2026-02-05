@@ -8,9 +8,14 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
-# dist
-# dist-ssr
+dist
+dist-ssr
 *.local
+
+# Artefatos locais (legado API)
+database.sqlite
+data/
+uploads/
 
 # Editor directories and files
 .vscode/*

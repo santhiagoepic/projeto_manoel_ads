@@ -1,28 +1,4 @@
 services:
-  api:
-    build:
-      context: .
-      target: dev
-    # Não publicamos a porta da API no host para evitar conflito com processos locais.
-    # O serviço web acessa via rede interna: http://api:8787
-    # Se você quiser acessar pelo host, descomente:
-    # ports:
-    #   - "8787:8787"
-    environment:
-      API_PORT: "8787"
-      DB_PATH: "/data/database.sqlite"
-      ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@fpdr.com}
-      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-admin123}
-      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
-      CHOKIDAR_USEPOLLING: "true"
-      WATCHPACK_POLLING: "true"
-    volumes:
-      - .:/app
-      - node_modules:/app/node_modules
-      - ./uploads:/app/uploads
-      - ./data:/data
-    command: npm run dev:api
-
   web:
     build:
       context: .
@@ -30,15 +6,12 @@ services:
     ports:
       - "3000:3000"
     environment:
-      VITE_API_URL: "http://api:8787"
       CHOKIDAR_USEPOLLING: "true"
       WATCHPACK_POLLING: "true"
     volumes:
       - .:/app
       - node_modules:/app/node_modules
-    depends_on:
-      - api
-    command: npm run dev:web
+    command: npm run dev
 
 volumes:
   node_modules:

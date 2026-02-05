@@ -10,12 +10,12 @@ export const INITIAL_DATA: LandingPageData = {
     heroOverlayColor: "#001A21E6", // Overlay escuro com transparência (90%)
     textDark: "#1A202C", // Texto padrão escuro
     textLight: "#FFFFFF", // Texto claro
-    heroBgImage: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&q=80&w=1600",
-    puzzleImage: "https://images.unsplash.com/photo-1584441405886-bc91be61e56a?auto=format&fit=crop&q=80&w=800",
-    lawImage: "https://images.unsplash.com/photo-1505664194779-8beaceb93744?auto=format&fit=crop&q=80&w=800",
-    pillsImage: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&q=80&w=800",
-    handshakeImage: "https://images.unsplash.com/photo-1521791136064-7986c2959213?auto=format&fit=crop&q=80&w=800",
-    lawyerImage: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400"
+    heroBgImage: "/images/photo-1589829545856-d10d557cf95f.avif",
+    puzzleImage: "/images/Gemini_Generated_Image_jir5rcjir5rcjir5d.png",
+    lawImage: "/images/photo-1505664194779-8beaceb93744.avif",
+    pillsImage: "/images/photo-1584308666744-24d5c474f2ae.avif",
+    handshakeImage: "/images/business-agreement-handshake-hand-gesture.jpg",
+    lawyerImage: ""
   },
   hero: {
     title: "Seu Filho com Autismo Possui Plano de Saúde?",
