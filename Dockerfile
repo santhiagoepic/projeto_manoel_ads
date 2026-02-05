@@ -23,11 +23,19 @@ FROM base AS web-build
 ENV NODE_ENV=production
 RUN npm run build
 
-# -------- PROD (API + static) --------
-FROM base AS prod
-# Reaproveita a instalação do base (inclui devDeps; necessário pois usamos tsx no start)
-COPY --from=web-build /app/dist /app/dist
+# -------- PROD (API only) --------
+FROM base AS api-prod
 ENV NODE_ENV=production
-ENV SERVE_WEB=1
+ENV SERVE_WEB=0
 EXPOSE 8787
-CMD ["npm", "run", "start"]
+CMD ["npm", "run", "start:api"]
+
+# -------- PROD (WEB only) --------
+FROM node:22-bookworm-slim AS web-prod
+WORKDIR /app
+ENV NODE_ENV=production
+COPY --from=web-build /app/dist /app/dist
+COPY web-server.mjs /app/web-server.mjs
+ENV WEB_PORT=3000
+EXPOSE 3000
+CMD ["node", "web-server.mjs"]

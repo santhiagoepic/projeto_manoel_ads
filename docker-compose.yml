@@ -1,11 +1,13 @@
 services:
-  app:
+  api:
     build:
       context: .
       target: dev
-    ports:
-      - "3000:3000"
-      - "8787:8787"
+    # Não publicamos a porta da API no host para evitar conflito com processos locais.
+    # O serviço web acessa via rede interna: http://api:8787
+    # Se você quiser acessar pelo host, descomente:
+    # ports:
+    #   - "8787:8787"
     environment:
       API_PORT: "8787"
       DB_PATH: "/data/database.sqlite"
@@ -19,7 +21,24 @@ services:
       - node_modules:/app/node_modules
       - ./uploads:/app/uploads
       - ./data:/data
-    command: npm run dev
+    command: npm run dev:api
+
+  web:
+    build:
+      context: .
+      target: dev
+    ports:
+      - "3000:3000"
+    environment:
+      VITE_API_URL: "http://api:8787"
+      CHOKIDAR_USEPOLLING: "true"
+      WATCHPACK_POLLING: "true"
+    volumes:
+      - .:/app
+      - node_modules:/app/node_modules
+    depends_on:
+      - api
+    command: npm run dev:web
 
 volumes:
   node_modules:

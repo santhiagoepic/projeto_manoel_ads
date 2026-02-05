@@ -6,6 +6,7 @@ import { AdminPage } from './pages/AdminPage';
 import { LoginPage } from './pages/LoginPage';
 import { INITIAL_DATA } from './constants';
 import { LandingPageData } from './types';
+import { apiUrl } from './clientApi';
 
 interface ProtectedRouteProps {
   isAuthenticated: boolean;
@@ -38,7 +39,7 @@ const App: React.FC = () => {
 
     (async () => {
       try {
-        const res = await fetch('/api/landing-data');
+        const res = await fetch(apiUrl('/api/landing-data'));
         if (res.ok) {
           const payload = (await res.json()) as { data: LandingPageData };
           setData(payload.data);
@@ -59,7 +60,7 @@ const App: React.FC = () => {
 
     (async () => {
       try {
-        const res = await fetch('/api/auth/me', {
+        const res = await fetch(apiUrl('/api/auth/me'), {
           headers: { Authorization: `Bearer ${token}` },
         });
         const ok = res.ok;
@@ -86,7 +87,7 @@ const App: React.FC = () => {
 
     const controller = new AbortController();
     const t = setTimeout(() => {
-      fetch('/api/landing-data', {
+      fetch(apiUrl('/api/landing-data'), {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -119,13 +120,13 @@ const App: React.FC = () => {
       localStorage.removeItem('legal_landing_data');
       const token = localStorage.getItem('auth_token');
       if (token) {
-        fetch('/api/landing-data/reset', {
+        fetch(apiUrl('/api/landing-data/reset'), {
           method: 'POST',
           headers: { Authorization: `Bearer ${token}` },
         })
           .then(async (r) => {
             if (!r.ok) throw new Error('reset_failed');
-            const res = await fetch('/api/landing-data');
+            const res = await fetch(apiUrl('/api/landing-data'));
             if (res.ok) {
               const payload = (await res.json()) as { data: LandingPageData };
               setData(payload.data);

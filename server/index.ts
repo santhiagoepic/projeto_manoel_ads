@@ -14,7 +14,12 @@ const REMOTE_IMAGE_TIMEOUT_MS = Number(process.env.REMOTE_IMAGE_TIMEOUT_MS ?? 15
 const UPLOAD_DIR = path.resolve(process.cwd(), 'uploads');
 const MAX_UPLOAD_BYTES = Number(process.env.MAX_UPLOAD_BYTES ?? 8 * 1024 * 1024);
 const DIST_DIR = path.resolve(process.cwd(), 'dist');
-const SERVE_WEB = process.env.SERVE_WEB === '1' || (process.env.NODE_ENV === 'production' && fs.existsSync(DIST_DIR));
+const SERVE_WEB =
+  process.env.SERVE_WEB === '1'
+    ? true
+    : process.env.SERVE_WEB === '0'
+      ? false
+      : process.env.NODE_ENV === 'production' && fs.existsSync(DIST_DIR);
 
 function nowIso() {
   return new Date().toISOString();
@@ -180,9 +185,15 @@ function main() {
 
   const app = express();
 
+  const extraCorsOrigins = (process.env.CORS_ORIGIN ?? '')
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean);
+  const corsOrigins = ['http://localhost:3000', 'http://127.0.0.1:3000', ...extraCorsOrigins];
+
   app.use(
     cors({
-      origin: ['http://localhost:3000', 'http://127.0.0.1:3000'],
+      origin: corsOrigins,
     }),
   );
 

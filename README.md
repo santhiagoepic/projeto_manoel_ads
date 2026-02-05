@@ -50,7 +50,7 @@ Na primeira vez que você roda o servidor, ele cria/abre `database.sqlite` e faz
 
 ### Desenvolvimento (hot reload)
 
-- Sobe Web (Vite) em `http://localhost:3000` e API em `http://localhost:8787`:
+- Sobe Web (Vite) em `http://localhost:3000` e API em `http://localhost:8787` (em containers separados):
    - `docker compose up --build`
 
 Persistência no Docker (volumes bind):
@@ -62,7 +62,11 @@ Variáveis (opcionais) via PowerShell, antes do compose:
 - `$env:ADMIN_PASSWORD="admin123"`
 - `$env:GEMINI_API_KEY="..."`
 
-### Produção (API servindo o build do site)
+### Produção (Docker Swarm + Traefik)
 
-- Sobe tudo em uma porta só (API + site): `http://localhost:8787`
-   - `docker compose -f docker-compose.yml -f docker-compose.prod.yml up --build`
+- Sobe **2 serviços separados** (WEB e API) com roteamento por **domínios diferentes**:
+   - FRONT: `https://${FRONT_DOMAIN}`
+   - API: `https://${API_DOMAIN}`
+   - Stack: `docker stack deploy -c docker-compose.swarm.yml advmanoelneto`
+
+Obs: configure `FRONT_DOMAIN` e `API_DOMAIN` (veja `.env-examplo`).

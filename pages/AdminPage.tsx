@@ -2,6 +2,7 @@
 import React, { useState, useRef } from 'react';
 import { LandingPageData, Review, ProcessStep } from '../types';
 import { LandingPage } from './LandingPage';
+import { apiUrl } from '../clientApi';
 
 interface Props {
   data: LandingPageData;
@@ -89,7 +90,7 @@ export const AdminPage: React.FC<Props> = ({ data, onUpdate, onReset }) => {
       const filename = file.type === 'image/svg+xml' ? (file.name || 'image.svg') : 'image.jpg';
       form.append('file', blob, filename);
 
-      const res = await fetch('/api/uploads', {
+      const res = await fetch(apiUrl('/api/uploads'), {
         method: 'POST',
         headers: { Authorization: `Bearer ${token}` },
         body: form,

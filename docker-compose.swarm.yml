@@ -1,0 +1,62 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod.api
+    image: advmanoelneto-api:latest
+    environment:
+      API_PORT: '8787'
+      DB_PATH: '/data/database.sqlite'
+      NODE_ENV: 'production'
+      SERVE_WEB: '0'
+      ADMIN_EMAIL: ${ADMIN_EMAIL}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
+      # Permite o frontend (outro domínio) chamar a API via browser
+      CORS_ORIGIN: https://${FRONT_DOMAIN}
+    volumes:
+      - ./uploads:/app/uploads
+      - ./data:/data
+    networks:
+      - crononest
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]
+      labels:
+        - 'traefik.enable=true'
+        - 'traefik.docker.network=crononest'
+        - 'traefik.http.routers.adv-manoel-api.rule=Host(`${API_DOMAIN}`)'
+        - 'traefik.http.routers.adv-manoel-api.entrypoints=${TRAEFIK_ENTRYPOINT:-websecure}'
+        - 'traefik.http.routers.adv-manoel-api.tls.certresolver=${TRAEFIK_CERTRESOLVER:-letsencryptresolver}'
+        - 'traefik.http.services.adv-manoel-api.loadbalancer.server.port=8787'
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod.web
+      args:
+        VITE_API_BASE_URL: https://${API_DOMAIN}
+    image: advmanoelneto-web:latest
+    environment:
+      WEB_PORT: '3000'
+    networks:
+      - crononest
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]
+      labels:
+        - 'traefik.enable=true'
+        - 'traefik.docker.network=crononest'
+        - 'traefik.http.routers.adv-manoel-web.rule=Host(`${FRONT_DOMAIN}`)'
+        - 'traefik.http.routers.adv-manoel-web.entrypoints=${TRAEFIK_ENTRYPOINT:-websecure}'
+        - 'traefik.http.routers.adv-manoel-web.tls.certresolver=${TRAEFIK_CERTRESOLVER:-letsencryptresolver}'
+        - 'traefik.http.services.adv-manoel-web.loadbalancer.server.port=3000'
+
+networks:
+  crononest:
+    external: true
+    name: crononest
