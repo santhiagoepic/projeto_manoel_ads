@@ -1,0 +1,25 @@
+services:
+  app:
+    build:
+      context: .
+      target: dev
+    ports:
+      - "3000:3000"
+      - "8787:8787"
+    environment:
+      API_PORT: "8787"
+      DB_PATH: "/data/database.sqlite"
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@fpdr.com}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-admin123}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      CHOKIDAR_USEPOLLING: "true"
+      WATCHPACK_POLLING: "true"
+    volumes:
+      - .:/app
+      - node_modules:/app/node_modules
+      - ./uploads:/app/uploads
+      - ./data:/data
+    command: npm run dev
+
+volumes:
+  node_modules:

@@ -1,0 +1,43 @@
+services:
+  # Nome do serviço único para este cliente
+  app-advogado:
+    build:
+      context: .
+      target: prod
+    # Recomendo dar um nome à imagem para facilitar o gerenciamento
+    image: advmanoelneto-app:latest
+    environment:
+      API_PORT: "8787"
+      DB_PATH: "/data/database.sqlite"
+      NODE_ENV: "production"
+      SERVE_WEB: "1"
+      # Não esqueça de configurar as variáveis abaixo no Portainer ou em um arquivo .env
+      ADMIN_EMAIL: ${ADMIN_EMAIL}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
+    volumes:
+      - ./uploads:/app/uploads
+      - ./data:/data
+    networks:
+      - crononest
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]
+      labels:
+        - "traefik.enable=true"
+        - "traefik.docker.network=crononest"
+        # Configuração do domínio
+        - "traefik.http.routers.adv-manoel.rule=Host(`advmanoelneto.com.br`)"
+        - "traefik.http.routers.adv-manoel.entrypoints=websecure"
+        - "traefik.http.routers.adv-manoel.tls.certresolver=letsencryptresolver"
+        - "traefik.http.routers.adv-manoel.priority=10"
+        # Porta interna do seu sistema (API_PORT)
+        - "traefik.http.services.adv-manoel.loadbalancer.server.port=8787"
+        - "traefik.http.routers.adv-manoel.service=adv-manoel"
+
+networks:
+  crononest:
+    external: true
+    name: crononest
