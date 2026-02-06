@@ -100,8 +100,8 @@ const Footer: React.FC<{ data: LandingPageData }> = ({ data }) => {
   return (
     <footer className="bg-[#00252D] text-white py-12 px-6 border-t border-[#003B46]">
       <div className="max-w-6xl mx-auto text-center space-y-4">
-        <p className="text-sm font-medium uppercase tracking-wider text-white/80">
-          {data.about.title} © TODOS OS DIREITOS RESERVADOS
+        <p className="text-sm font-medium tracking-wider text-white/80">
+          © Todos os direitos reservados Manoel Neto
         </p>
         <p className="text-[10px] text-white/40 max-w-2xl mx-auto italic">
           Trabalhamos exclusivamente com serviços jurídicos especializados.

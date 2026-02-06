@@ -22,7 +22,7 @@ export const INITIAL_DATA: LandingPageData = {
     subtitle: "Saiba Quais São Seus Direitos e Garanta o Tratamento Necessário",
     description: "Você não está sozinho nessa luta. Todos os dias, inúmeras famílias enfrentam recusas indevidas dos planos de saúde ao tentar assegurar terapias essenciais para crianças com Transtorno do Espectro Autista (TEA). A boa notícia é que a legislação brasileira protege esses direitos — e é possível garanti-los com o apoio jurídico adequado.",
     ctaText: "FALE AGORA COM O ADVOGADO",
-    whatsappNumber: "5599981716515"
+    whatsappNumber: "99981716515"
   },
   challenges: {
     title: "Uma Caminhada Que Não Precisa Ser Solitária",
@@ -71,7 +71,7 @@ export const INITIAL_DATA: LandingPageData = {
   contact: {
     email: "adv_manoelpinto@outlook.com",
     phone: "(99) 98171-6515",
-    instagram: "@piluladedireitomedico",
+    instagram: "@maneelpinto",
     hours: "Segunda a sexta, das 8h às 19h"
   }
 };
